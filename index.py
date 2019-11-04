@@ -1,8 +1,6 @@
 import argparse
 import os
-import sys
-import helpers
-
+from SI import helpers
 
 # Create a command line parser which accepts two positional arguments
 parser = argparse.ArgumentParser(
