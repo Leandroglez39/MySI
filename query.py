@@ -1,6 +1,5 @@
 import os
 import re
-import argparse
 import pickle
 import sys
 from nltk.corpus import stopwords
@@ -17,13 +16,10 @@ dictionary = inverted_index.keys()
 non_words = re.compile(r"[^A-Za-z'?]+")
 stop_words = set(stopwords.words('english'))
 
-# Create a command line parser
-parser = argparse.ArgumentParser(description='Boolean query')
-parser.add_argument('query', help='words seperated by space')
-args = parser.parse_args()
+
 
 # Preprocess query
-query = args.query
+query = 'Blue'
 query = query.lower()
 query = re.sub(non_words, ' ', query)
 
