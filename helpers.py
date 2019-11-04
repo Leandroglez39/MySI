@@ -39,10 +39,19 @@ def get_text_from_file(filename):
 def get_words_from_text(text):
     stop_words = set(stopwords.words('english'))
 
+    #remove stopwords
     processed_text = preprocess_text(text)
     words = {w for w in processed_text.split() if w not in stop_words}
 
-    return words
+    # Stemming
+    porter = nltk.PorterStemmer()
+    tokens_stem = [porter.stem(t) for t in words]
+
+    # Lemmatization
+    wnl = nltk.WordNetLemmatizer()
+    tokens_lem = [wnl.lemmatize(t) for t in tokens_stem]
+
+    return tokens_lem
 
 
 def build_inverted_index(docs_path):
