@@ -1,21 +1,8 @@
-import argparse
 import os
 from SI import helpers
 
-# Create a command line parser which accepts two positional arguments
-parser = argparse.ArgumentParser(
-    description='Index data for boolean retrieval')
-parser.add_argument('docs_path', help='Directory for documents to be indexed')
-parser.add_argument('data_path', help='Directory for storing indexed data')
-args = parser.parse_args()
+helpers.assert_dir('/home/leandro/PycharmProjects/untitled/SI/docs/document.txt')
+helpers.assert_dir('/home/leandro/PycharmProjects/untitled/SI/data')
 
-# Get arguments
-docs_path = os.path.abspath(args.docs_path)
-data_path = os.path.abspath(args.data_path)
-
-
-helpers.assert_dir(docs_path)
-helpers.assert_dir(data_path)
-
-helpers.index(docs_path, data_path)
+helpers.index('/home/leandro/PycharmProjects/untitled/SI/docs', '/home/leandro/PycharmProjects/untitled/SI/data')
 print('Index done.')

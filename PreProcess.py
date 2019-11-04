@@ -25,7 +25,7 @@ def PreProces(text):
 
 if __name__ == '__main__':
     # open file
-    f = open('document.txt')
+    f = open('/home/leandro/PycharmProjects/untitled/SI/docs/document.txt')
     raw = f.read()
 
     # cargar stopwords
