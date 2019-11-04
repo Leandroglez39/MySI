@@ -9,14 +9,19 @@ class AddressBook(QWidget):
         nameLabel = QLabel("Path:")
         self.nameLine = QLineEdit()
 
+        nameLabel2 = QLabel("Query:")
+        self.nameLine2 = QLineEdit()
+
         addressLabel = QLabel("Result:")
         self.addressText = QTextEdit()
 
         mainLayout = QGridLayout()
         mainLayout.addWidget(nameLabel, 0, 0)
+        mainLayout.addWidget(nameLabel2,1,0)
         mainLayout.addWidget(self.nameLine, 0, 1)
-        mainLayout.addWidget(addressLabel, 1, 0, Qt.AlignTop)
-        mainLayout.addWidget(self.addressText, 1, 1)
+        mainLayout.addWidget(self.nameLine2,1,1)
+        mainLayout.addWidget(addressLabel, 2, 0, Qt.AlignTop)
+        mainLayout.addWidget(self.addressText, 2, 1)
 
         self.setLayout(mainLayout)
         self.setWindowTitle("Information Retrieval")
