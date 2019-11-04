@@ -30,7 +30,7 @@ class AddressBook(QWidget):
         self.loadButton.setToolTip("Load dir from a file")
 
         self.addButton.clicked.connect(self.addContact)
-        self.loadButton.clicked.connect(self.loadFromFile)
+        self.loadButton.clicked.connect(self.myload)
 
         buttonLayout1 = QVBoxLayout()
         buttonLayout1.addWidget(self.loadButton)
@@ -58,9 +58,17 @@ class AddressBook(QWidget):
         self.nameLine.setFocus(Qt.OtherFocusReason)
         self.addressText.setReadOnly(False)
 
+
+    def myload(self):
+        file = QFileDialog.getExistingDirectory(self)
+        print(file)
+
+        #self.updateInterface(self.NavigationMode)
+
     def loadFromFile(self):
         fileName, _ = QFileDialog.getOpenFileName(self, "Open Address Book",
                                                   '', "Address Book (*.abk);;All Files (*)")
+
 
         if not fileName:
             return
