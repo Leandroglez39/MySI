@@ -19,7 +19,7 @@ stop_words = set(stopwords.words('english'))
 
 
 # Preprocess query
-query = 'Blue'
+query = 'modelo'
 query = query.lower()
 query = re.sub(non_words, ' ', query)
 
