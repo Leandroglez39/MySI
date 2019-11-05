@@ -11,6 +11,7 @@
 - Install   re 
 - Install   sys 
 - Install   heapq
+- Install   pdfminer
     
 ###Ejecucion
     >$ python3 Visual.py
