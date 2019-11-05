@@ -1,8 +1,9 @@
 import os
 from SI import helpers
 
-helpers.assert_dir('/home/leandro/PycharmProjects/untitled/SI/docs/')
-helpers.assert_dir('/home/leandro/PycharmProjects/untitled/SI/data')
+def index(path):
+    helpers.assert_dir(path)
+    helpers.assert_dir('./data')
 
-helpers.index('/home/leandro/PycharmProjects/untitled/SI/docs', '/home/leandro/PycharmProjects/untitled/SI/data')
-print('Index done.')
+    helpers.index(path, './data')
+    print('Index done.')
