@@ -1,3 +1,3 @@
 En correspondencia al modelo de recuperación a emplear es necesaria la
 creación de índices que permitan, de manera eficiente, realizar la recuperación
-de los documentos.
+de los documentos blue.

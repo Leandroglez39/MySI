@@ -5,7 +5,8 @@ from PyQt5.QtWidgets import (QDialog, QFileDialog, QGridLayout, QHBoxLayout,
         QLabel, QLineEdit, QMessageBox, QPushButton, QTextEdit, QVBoxLayout,
         QWidget)
 
-from SI import index
+from SI import index,query
+
 
 
 class AddressBook(QWidget):
@@ -50,11 +51,14 @@ class AddressBook(QWidget):
         self.setWindowTitle("Information Retrieval")
 
     def addContact(self):
+        terms = self.nameLine2.text()
+        result = query.search(terms)
+        print(result)
+        text = ''
+        for x in result:
+            text = text + str(x) + '\n '
+        self.addressText.setText(text)
 
-        self.nameLine.clear()
-        self.addressText.clear()
-
-        self.nameLine.setReadOnly(False)
         self.nameLine.setFocus(Qt.OtherFocusReason)
         self.addressText.setReadOnly(False)
 

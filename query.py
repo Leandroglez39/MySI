@@ -17,22 +17,22 @@ non_words = re.compile(r"[^A-Za-z'?]+")
 stop_words = set(stopwords.words('english'))
 
 
+def search(text):
+    # Preprocess query
+    query = text
+    query = query.lower()
+    query = re.sub(non_words, ' ', query)
 
-# Preprocess query
-query = 'modelo'
-query = query.lower()
-query = re.sub(non_words, ' ', query)
+    # Remove all stopwords and words which is not in dictionary
+    words = {
+        word for word in query.split()
+        if word not in stop_words and word in dictionary}
 
-# Remove all stopwords and words which is not in dictionary
-words = {
-    word for word in query.split()
-    if word not in stop_words and word in dictionary}
+    result = None
+    for word in words:
+        if result is None:
+            result = inverted_index.get(word)
+        else:
+            result.intersection_update(inverted_index.get(word))
 
-result = None
-for word in words:
-    if result is None:
-        result = inverted_index.get(word)
-    else:
-        result.intersection_update(inverted_index.get(word))
-
-print(result)
+    return result
