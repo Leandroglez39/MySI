@@ -24,11 +24,19 @@ class AddressBook(QWidget):
         self.addressText = QTextEdit()
         addressLabel.setOpenExternalLinks(True)
 
+        self.dialog = FindDialog()
+
         self.addButton = QPushButton("&Run")
         self.addButton.show()
 
         self.pButton = QPushButton("&Precision")
         self.pButton.hide()
+        self.rButton = QPushButton("&Recall")
+        self.rButton.hide()
+        self.FButton = QPushButton("&F-Media")
+        self.FButton.hide()
+        self.rpButton = QPushButton("&R-Precision")
+        self.rpButton.hide()
 
 
         self.loadButton = QPushButton("&Load...")
@@ -37,6 +45,9 @@ class AddressBook(QWidget):
         self.addButton.clicked.connect(self.addContact)
         self.loadButton.clicked.connect(self.myload)
         self.pButton.clicked.connect(self.precision)
+        self.rButton.clicked.connect(self.recall)
+        self.FButton.clicked.connect(self.fmedia)
+        self.rpButton.clicked.connect(self.rprecision)
 
 
 
@@ -45,6 +56,10 @@ class AddressBook(QWidget):
         buttonLayout1.addWidget(self.loadButton)
         buttonLayout1.addWidget(self.addButton, Qt.AlignTop)
         buttonLayout1.addWidget(self.pButton)
+        buttonLayout1.addWidget(self.rButton)
+        buttonLayout1.addWidget(self.FButton)
+        buttonLayout1.addWidget(self.rpButton)
+
         buttonLayout1.addStretch()
 
         mainLayout = QGridLayout()
@@ -69,7 +84,11 @@ class AddressBook(QWidget):
         self.addressText.setText(text)
         self.nameLine.setFocus(Qt.OtherFocusReason)
         self.addressText.setReadOnly(False)
+
         self.pButton.show()
+        self.rButton.show()
+        self.rpButton.show()
+        self.FButton.show()
 
         return len(result)
 
@@ -90,9 +109,91 @@ class AddressBook(QWidget):
 
         QMessageBox.information(self, "Precision",
                     "\"%s\""  % 'Value: ' + str(relevan/total))
-        #return relevan/total
+
+        self.pButton.hide()
 
 
+
+    def recall(self):
+        total = len(os.listdir(self.nameLine.text()))
+
+        terms = self.nameLine2.text()
+        result = query.search(terms)
+        relevan = len(result)
+
+        QMessageBox.information(self, "Recall",
+                    "\"%s\""  % 'Value: ' + str(total/relevan))
+
+        self.rButton.hide()
+
+
+
+    def fmedia(self):
+        total = len(os.listdir(self.nameLine.text()))
+
+        terms = self.nameLine2.text()
+        result = query.search(terms)
+        relevan = len(result)
+
+        pre = relevan/total
+        rec = total/relevan
+
+        QMessageBox.information(self, "F-Media",
+                                "\"%s\"" % 'Value: ' + str(2*((pre*rec) / (pre+rec))))
+        self.FButton.hide()
+
+    def rprecision(self):
+
+        self.dialog.show()
+
+        if self.dialog.exec_() == QDialog.Accepted:
+            data = self.dialog.getFindText()
+
+        terms = self.nameLine2.text()
+        result = query.search(terms)
+        relevan = len(result)
+
+        QMessageBox.information(self, "R-Precision",
+                                "\"%s\"" % 'Value: ' + str(int(data) / relevan))
+
+        self.rpButton.hide()
+
+class FindDialog(QDialog):
+    def __init__(self, parent=None):
+        super(FindDialog, self).__init__(parent)
+
+        findLabel = QLabel("Enter the value un r precision")
+        self.lineEdit = QLineEdit()
+
+        self.findButton = QPushButton("&OK")
+
+        self.findText = ''
+
+        layout = QHBoxLayout()
+        layout.addWidget(findLabel)
+        layout.addWidget(self.lineEdit)
+        layout.addWidget(self.findButton)
+
+        self.setLayout(layout)
+        self.setWindowTitle("Value R-Precision")
+
+        self.findButton.clicked.connect(self.findClicked)
+        self.findButton.clicked.connect(self.accept)
+
+    def findClicked(self):
+        text = self.lineEdit.text()
+
+        if not text:
+            QMessageBox.information(self, "Empty Field",
+                    "Please enter a name.")
+            return
+        else:
+            self.findText = text
+            self.lineEdit.clear()
+            self.hide()
+
+    def getFindText(self):
+        return self.findText
 if __name__ == '__main__':
     import sys
 
