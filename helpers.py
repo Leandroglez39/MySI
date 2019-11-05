@@ -82,3 +82,10 @@ def index(docs_path, data_path):
 
     with open(inverted_index_file, mode='wb') as f:
         pickle.dump(inverted_index, f)
+
+def loads(path):
+    dic = pickle.load(open(path,'rb'))
+    print(dic)
+
+if __name__ == '__main__':
+    loads('./data/inverted_index.pickle')

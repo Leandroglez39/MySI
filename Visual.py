@@ -2,7 +2,7 @@ import pickle
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QDialog, QFileDialog, QGridLayout, QHBoxLayout,
-        QLabel, QLineEdit, QMessageBox, QPushButton, QTextEdit, QVBoxLayout,
+        QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout,
         QWidget)
 
 from SI import index,query
@@ -22,7 +22,7 @@ class AddressBook(QWidget):
 
         addressLabel = QLabel("Result:")
         self.addressText = QTextEdit()
-
+        addressLabel.setOpenExternalLinks(True)
 
         self.addButton = QPushButton("&Run")
         self.addButton.show()
@@ -53,12 +53,10 @@ class AddressBook(QWidget):
     def addContact(self):
         terms = self.nameLine2.text()
         result = query.search(terms)
-        print(result)
         text = ''
         for x in result:
             text = text + str(x) + '\n '
         self.addressText.setText(text)
-
         self.nameLine.setFocus(Qt.OtherFocusReason)
         self.addressText.setReadOnly(False)
 
