@@ -4,6 +4,8 @@ import os
 import pickle
 import sys
 from nltk.corpus import stopwords
+import heapq
+
 
 
 
@@ -68,6 +70,8 @@ def build_inverted_index(docs_path):
             else:
                 inverted_index[word].add(filename)
 
+    build_heap(inverted_index)
+
     return inverted_index
 
 
@@ -85,7 +89,30 @@ def index(docs_path, data_path):
 
 def loads(path):
     dic = pickle.load(open(path,'rb'))
-    print(dic)
+    return dic
 
-if __name__ == '__main__':
-    loads('./data/inverted_index.pickle')
+def dic_to_tuple_list(dic:dict):
+    list = []
+
+    for x in dic.keys():
+        list.append((len(dic[x]),x))
+
+    return list
+
+def build_heap(dic):
+
+    lis = dic_to_tuple_list(dic)
+    heap = []
+
+    for x in lis:
+        heapq.heappush(heap,x)
+
+    with open('./data/heap.pickle', mode='wb') as f:
+        pickle.dump(heap, f)
+
+
+#def precision(docs_path):
+#    return len(os.listdir(docs_path))
+
+#if __name__ == '__main__':
+ #   loads('./data/heap.pickle')
